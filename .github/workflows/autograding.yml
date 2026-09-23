@@ -1,0 +1,24 @@
+name: Linux Swap Space Autograding
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install BATS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats
+
+      - name: Make script executable
+        run: chmod +x swap.sh
+
+      - name: Run Tests
+        run: bats tests/test_swap.bats
